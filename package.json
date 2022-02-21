@@ -1,0 +1,35 @@
+{
+  "name": "aliens-vaults",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "degentech",
+  "license": "MIT",
+  "engines": {
+    "node": "^14.17.1",
+    "yarn": "^1.22.10"
+  },
+  "dependencies": {
+    "@taquito/signer": "^9.1.1",
+    "@taquito/taquito": "^9.2.0",
+    "dotenv": "^10.0.0",
+    "fs-extra": "^10.0.0",
+    "yargs": "^17.0.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.18",
+    "@types/mocha": "^8.2.2",
+    "chai": "^4.3.4",
+    "mocha": "^9.0.0"
+  },
+  "scripts": {
+    "clean": "rm -rf ./builds/",
+    "migrate": "node scripts/cli.js migrate",
+    "precompile": "node scripts/cli.js compile -c VaultLp -t text && node scripts/cli.js compile -c VaultSingle -t text",
+    "compile": "yarn clean && yarn precompile && node scripts/cli.js compile && node scripts/cli.js compileTest",
+    "start-sandbox": "docker run --rm --name dev-sandbox -e  block_time=1 --detach -p 8732:20000 tqtezos/flextesa:20210602 granabox start",
+    "stop-sandbox": "docker kill dev-sandbox",
+    "test": "mocha 'tests/*.js' --timeout 500000 --bail"
+  },
+  "target": "ES6"
+}
